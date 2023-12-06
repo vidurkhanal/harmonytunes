@@ -344,7 +344,7 @@ export async function getMenu(handle: string): Promise<Menu[]> {
     });
 
   return (
-    menus?.map((menu: { data: { title: string; pageSlug: string }; id: string }) => ({
+    (menus as { data: { title: string; pageSlug: string } }[])?.map((menu) => ({
       title: menu.data.title,
       path: '/' + menu.data.pageSlug
     })) || []
