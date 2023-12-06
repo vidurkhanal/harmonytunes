@@ -50,7 +50,10 @@ const reshapeCart = (cart: currentCart.Cart): Cart => {
         },
         merchandise: {
           id: item._id!,
-          title: item.descriptionLines?.map(x => x.colorInfo?.original ?? x.plainText?.original).join(' / ') ?? '',
+          title:
+            item.descriptionLines
+              ?.map((x) => x.colorInfo?.original ?? x.plainText?.original)
+              .join(' / ') ?? '',
           selectedOptions: [],
           product: {
             handle: item.url?.split('/').pop() ?? '',
@@ -60,7 +63,7 @@ const reshapeCart = (cart: currentCart.Cart): Cart => {
               width: media.getImageUrl(item.image!).width,
               height: media.getImageUrl(item.image!).height
             },
-            title: item.productName?.original!,
+            title: item.productName?.original!
           } as any as Product,
           url: `/product/${item.url?.split('/').pop() ?? ''}`
         }
@@ -139,7 +142,7 @@ const reshapeProduct = (item: products.Product) => {
             amount: String(variant.variant?.priceData?.price),
             currencyCode: variant.variant?.priceData?.currency
           },
-          availableForSale: variant.stock?.trackQuantity ? (variant.stock?.quantity ?? 0 > 0) : true,
+          availableForSale: variant.stock?.trackQuantity ? variant.stock?.quantity ?? 0 > 0 : true,
           selectedOptions: Object.entries(variant.choices ?? {}).map(([name, value]) => ({
             name,
             value
@@ -325,11 +328,11 @@ export async function getMenu(handle: string): Promise<Menu[]> {
 
   const { items: menus } = await queryDataItems({
     dataCollectionId: 'Menus',
-    includeReferencedItems: ['pages']
+    includeReferencedItems: ['Menus']
   })
     .eq('slug', handle)
     .find()
-    .catch((e) => {
+    .catch((e: { details: { applicationError: { code: string } } }) => {
       if (e.details.applicationError.code === 'WDE0025') {
         console.error(
           'Menus collection was not found. Did you forget to create the Menus data collection?'
@@ -340,12 +343,10 @@ export async function getMenu(handle: string): Promise<Menu[]> {
       }
     });
 
-  const menu = menus[0];
-
   return (
-    menu?.data!.pages.map((page: { title: string; slug: string }) => ({
-      title: page.title,
-      path: '/' + page.slug
+    menus?.map((menu: { data: { title: string; pageSlug: string }; id: string }) => ({
+      title: menu.data.title,
+      path: '/' + menu.data.pageSlug
     })) || []
   );
 }
