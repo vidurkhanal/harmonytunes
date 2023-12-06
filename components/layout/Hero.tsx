@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function LandingHero() {
   return (
-    <section className="lg:p relative mb-10 min-h-[40vh] w-full bg-gray-200 p-4 pl-[5rem] dark:bg-gray-800 md:py-24 xl:py-48">
+    <section className="relative mb-10 min-h-[40vh] w-full bg-gray-200 p-4 pl-[5rem] dark:bg-gray-800 sm:p-4 md:p-32 md:py-24 xl:py-48">
       <Image
         src={'/hero-bg.jpg'}
         alt="Musical Instruments Background"
@@ -23,14 +23,7 @@ export default function LandingHero() {
                 Discover the perfect sound with our high quality instruments.
               </p>
             </div>
-            <div className="space-x-4">
-              <Link
-                className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-6 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-100 dark:focus-visible:ring-gray-700"
-                href="#"
-              >
-                Shop Now
-              </Link>
-            </div>
+            <div className="space-x-4"></div>
           </div>
         </div>
       </div>
